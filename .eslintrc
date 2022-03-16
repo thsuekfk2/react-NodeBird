@@ -1,0 +1,18 @@
+{
+    "parserOptions": {
+      "ecmaVersion": 2022,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "env": {
+      "browser": true,
+      "node": true,
+      "es6": true
+    },
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
+    //남들이 만든 규칙을 따른다.
+  
+    "plugins": ["import", "react-hooks"]
+  }
