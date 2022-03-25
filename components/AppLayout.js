@@ -5,7 +5,7 @@ import { Col, Input, Menu, Row } from "antd";
 import styled from "styled-components";
 import LoginForm from "./LoginForm";
 import UserProfile from "./UserProfile";
-
+import { useSelector } from "react-redux"; // 리액트랑 리덕스를 연결해 주는 아이
 const SearchInput = styled(Input.Search)`
   vertical-align: "middle";
 `;
@@ -16,7 +16,8 @@ const SearchInput = styled(Input.Search)`
     ))  */
 }
 const AppLayout = ({ children }) => {
-  const [isLoggedIN, setIsLoggedIn] = useState(false);
+  // const [isLoggedIN, setIsLoggedIn] = useState(false);
+  const isLoggedIN = useSelector((state) => state.user.isLoggedIn);
   return (
     <div>
       <Menu mode="horizontal">
@@ -36,11 +37,7 @@ const AppLayout = ({ children }) => {
       </Menu>
       <Row gutter={8}>
         <Col xs={24} md={6}>
-          {isLoggedIN ? (
-            <UserProfile setIsLoggedIn={setIsLoggedIn} />
-          ) : (
-            <LoginForm setIsLoggedIn={setIsLoggedIn} />
-          )}
+          {isLoggedIN ? <UserProfile /> : <LoginForm />}
         </Col>
         <Col xs={24} md={12}>
           {children}
