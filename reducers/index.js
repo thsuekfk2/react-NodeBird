@@ -1,58 +1,22 @@
 import { HYDRATE } from "next-redux-wrapper";
+import user from "./user";
+import post from "./post";
+import { combineReducers } from "redux";
 
-const initialState = {
-  user: {
-    isLoggedIn: false,
-    user: null,
-    signUpData: {},
-    loginData: {},
-  },
-  post: {
-    mainPosts: [],
-  },
-};
-export const loginAction = (data) => {
-  return {
-    type: "LOG_IN",
-    data,
-  };
-};
+const rootReducer = combineReducers({
+  //리덕스 서버 사이드 렌더링을 위한 HYDRATE, index reducer 넣어줌
+  index: (state = {}, action) => {
+    switch (action.type) {
+      case HYDRATE:
+        console.log("HYDRATE", action);
+        return { ...state, ...action.pyaload };
 
-export const logoutAction = () => {
-  return {
-    type: "LOG_OUT",
-  };
-};
-
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case HYDRATE:
-      console.log("HYDRATE", action);
-      return { ...state, ...action.pyaload };
-    case "LOG_IN":
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          isLoggedIn: true,
-          user: action.data,
-        },
-      };
-    case "LOG_OUT":
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          isLoggedIn: false,
-          user: null,
-        },
-      };
-    default: {
-      return {
-        ...state,
-      };
+      default:
+        return state;
     }
-  }
-};
+  },
+  user,
+  post,
+});
 
 export default rootReducer;
